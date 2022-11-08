@@ -1,36 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <nav id="loginPosition">
+<a href="/csci4830-recipe-book/login.html">Login</a> <br>
+</nav>
     <style>
+#loginPosition {
+	float: right;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 15px;
+}
+
 table.GeneratedTable {
-  width: 100%;
-  background-color: #ffffff;
-  border-collapse: collapse;
-  border-width: 2px;
-  border-color: #0d0d0d;
-  border-style: solid;
-  color: #000000;
+	width: 100%;
+	background-color: #ffffff;
+	border-collapse: collapse;
+	border-width: 2px;
+	border-color: #0d0d0d;
+	border-style: solid;
+	color: #000000;
 }
 
 table.GeneratedTable td, table.GeneratedTable th {
-  border-width: 2px;
-  border-color: #0d0d0d;
-  border-style: solid;
-  padding: 3px;
+	border-width: 2px;
+	border-color: #0d0d0d;
+	border-style: solid;
+	padding: 3px;
 }
 
 table.GeneratedTable thead {
-  background-color: #ffffff;
+	background-color: #ffffff;
 }
 </style>
 <!-- Load icon library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css%22%3E
 
 <!-- The form -->
 <form class="example" action="action_page.php">
   <input type="text" placeholder="Search Your Recipe" name="search">
   <button type="submit"><i class="fa fa-search"></i></button>
-  
+
   <div id="wrapper">
   <select>
     <option selected>Filter by review</option>
@@ -73,4 +86,3 @@ table.GeneratedTable thead {
   </tbody>
 </table>
 </body>
-</html>
