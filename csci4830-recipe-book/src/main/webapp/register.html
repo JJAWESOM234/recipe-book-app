@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style>
+form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+</style>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Register</title>
 </head>
 <body>
-	<center>
-		<h3>Register Here</h3>
-		<form action="" method="post">
-			<table>
-				<tr>
-					<td>Username:</td>
-					<td><input type="text" name="user"
-						placeholder="Enter name Here"></td>
-				</tr>
-				<tr>
-					<td>Password:</td>
-					<td><input type="password" name="user_pass"
-						placeholder="Enter Password Here"></td>
-				</tr>
 
-				<tr>
-					<td><input type="submit" name="Submit" value="submit"></td>
-					<td><p>
-							Already a user? <a href="/csci4830-recipe-book/login.html">Login Here</a>
-						</p></td>
-				</tr>
-			</table>
-		</form>
+	<h1 align="center">Register Here</h1>
+	<form action="Register" method="POST">
+		<table>
+			<tr>
+				<td>User name:</td>
+				<td><input type="text" name="user"
+					placeholder="Enter name Here"></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type="password" name="pass"
+					placeholder="Enter Password Here"></td>
+			</tr>
 
-	</center>
+			<tr>
+				<td><input type="submit" name="submit" value="Submit"></td>
+				<td><p>
+						Already a user? <a href="/csci4830-recipe-book/login.html">Login
+							Here</a>
+					</p></td>
+			</tr>
+		</table>
+	</form>
+
+
 </body>
 </html>
