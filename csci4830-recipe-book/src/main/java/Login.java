@@ -1,10 +1,17 @@
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import util.DBConnection;
 
 /**
  * Servlet implementation class Login
@@ -32,14 +39,29 @@ public class Login extends HttpServlet {
 		String password = request.getParameter("pass");
 
 		response.getWriter().append(userName + " " + password);
-
-		// here call the DB and compare the given credentials with the database to
-		// ensure they are a user, if they are
-		// exec the redirect stmt if they are not, redirect them back to login with
-		// error message.
-
-		// Redirect to recipe list page, should be conditional based on valid login
-		response.sendRedirect(request.getContextPath() + "/Search.html");
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try { 
+			DBConnection.getDBConnection();
+			connection = DBConnection.connection;
+			
+			String selectSQL = "SELECT * FROM users WHERE username LIKE ?";
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, userName);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			if (password.equals(rs.getString("password"))) {
+				response.getOutputStream().print("Login Succesful");
+				response.sendRedirect(request.getContextPath() + "/Search.html");
+			}
+			else {
+				response.getOutputStream().print("Login Failed");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

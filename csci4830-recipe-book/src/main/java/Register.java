@@ -1,12 +1,18 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import util.DBConnection;
 
 /**
  * Servlet implementation class Register
@@ -34,6 +40,21 @@ public class Register extends HttpServlet {
 		String password = request.getParameter("pass");
 		
 		// Add username and password to the DB 
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try { 
+			DBConnection.getDBConnection();
+			connection = DBConnection.connection;
+			
+			 String insertSQL = "INSERT INTO users (username, password) "
+	        	  		+ "VALUES ('" + userName + "', '" + password + "')";
+			 preparedStatement = connection.prepareStatement(insertSQL);
+	         preparedStatement.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		displayHTML(request, response, userName);
 
