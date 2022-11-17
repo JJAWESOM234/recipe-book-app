@@ -47,7 +47,7 @@ public class Register extends HttpServlet {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
 			
-			 String insertSQL = "INSERT INTO users (username, password) "
+			 String insertSQL = "INSERT INTO userLogin (username, password) "
 	        	  		+ "VALUES ('" + userName + "', '" + password + "')";
 			 preparedStatement = connection.prepareStatement(insertSQL);
 	         preparedStatement.execute();

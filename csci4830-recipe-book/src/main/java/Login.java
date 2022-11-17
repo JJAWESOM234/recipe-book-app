@@ -46,17 +46,17 @@ public class Login extends HttpServlet {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
 			
-			String selectSQL = "SELECT * FROM users WHERE username LIKE ?";
+			String selectSQL = "SELECT * FROM userLogin WHERE username LIKE ?";
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, userName);
 			
 			ResultSet rs = preparedStatement.executeQuery();
 			if (password.equals(rs.getString("password"))) {
-				response.getOutputStream().print("Login Succesful");
+				response.getWriter().append("Login Succesful");
 				response.sendRedirect(request.getContextPath() + "/Search.html");
 			}
 			else {
-				response.getOutputStream().print("Login Failed");
+				response.getWriter().append("Login Failed");
 			}
 			
 		} catch (SQLException e) {
