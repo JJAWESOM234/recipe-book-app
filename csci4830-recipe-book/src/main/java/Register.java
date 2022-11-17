@@ -85,7 +85,7 @@ public class Register extends HttpServlet {
 				"<head><title>" + title + "</title> <style> .container{text-align: center;} </style></head>\n" + //
 				"<body bgcolor=\"#f0f0f0\">\n" + //
 				"<h1 align=\"center\">" + title + "</h1>\n");
-		out.println("<div class=\"container\"><a href=" + request.getContextPath() + "/Search.html>Continue to Recipe List</a></div> <br>");
+		out.println("<div class=\"container\"><a href=" + request.getContextPath() + "/SearchRecipeList>Continue to Recipe List</a></div> <br>");
 		out.println("</body></html>");
 	}
 

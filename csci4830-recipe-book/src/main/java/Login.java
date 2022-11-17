@@ -41,24 +41,30 @@ public class Login extends HttpServlet {
 		response.getWriter().append(userName + " " + password);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		
-		try { 
+
+		try {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
-			
+
 			String selectSQL = "SELECT * FROM userLogin WHERE username LIKE ?";
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, userName);
-			
+
 			ResultSet rs = preparedStatement.executeQuery();
-			if (password.equals(rs.getString("password"))) {
-				response.getWriter().append("Login Succesful");
-				response.sendRedirect(request.getContextPath() + "/Search.html");
-			}
-			else {
-				response.getWriter().append("Login Failed");
-			}
 			
+			if (rs.next() != false) {
+				do {
+					System.out.println("john");
+					if (password.equals(rs.getString("password"))) {
+						response.getWriter().append("Login Succesful");
+						response.sendRedirect(request.getContextPath() + "/SearchRecipeList");
+					}
+				} while (rs.next());
+			} else {
+				response.getWriter().append("Login Failed");
+				response.sendRedirect(request.getContextPath() + "/login.html");
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

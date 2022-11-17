@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<nav id="loginPosition">
-	<a href="/csci4830-recipe-book/login.html">Login</a> <br>
-</nav>
 <style>
 #loginPosition {
 	float: right;
@@ -16,10 +13,10 @@
 }
 
 table.GeneratedTable {
-	width: 100%;
+	width: 75%;
 	background-color: #ffffff;
 	border-collapse: collapse;
-	border-width: 2px;
+	border-width: 1px;
 	border-color: #0d0d0d;
 	border-style: solid;
 	color: #000000;
@@ -35,60 +32,96 @@ table.GeneratedTable td, table.GeneratedTable th {
 table.GeneratedTable thead {
 	background-color: #ffffff;
 }
+
+button.link {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
 </style>
-<!-- Load icon library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css%22%3E"/>
-<!-- The form -->
-<form class="example" action="action_page.php">
-<input type="text" placeholder="Search Your Recipe" name="search">
-<button type="submit">Button</button>
-
-<div id="wrapper">
-	<select>
-		<option selected>Filter by review</option>
-		<option value="one">One</option>
-		<option value="two">Two</option>
-		<option value="three">Three</option>
-		<option value="four">Four</option>
-		<option value="five">Five</option>
-	</select>
-</div>
-<button class="btn success">Sort Recipe Alphabetically</button>
-
-</form>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css%22%3E" />
 </head>
 <body>
+	<nav id="loginPosition">
+		<a href="/csci4830-recipe-book/login.html">Login</a> <br>
+	</nav>
+	<form class="params" action="/csci4830-recipe-book/SearchRecipeList"
+		method="POST">
+		<input type="text" placeholder="Search Your Recipe" name="search">
+		<button type="submit">Search</button>
+
+		<div id="wrapper">
+			<select>
+				<option selected>Filter by review</option>
+				<option value="one">One</option>
+				<option value="two">Two</option>
+				<option value="three">Three</option>
+				<option value="four">Four</option>
+				<option value="five">Five</option>
+			</select>
+		</div>
+		<label for="aSort">Sort Recipes Alphabetically:</label><input
+			type="checkbox" id="aSort" value="aSort" />
+
+	</form>
 	<h2 class="sep">Browse Recipes:</h2>
 
 	<table class="GeneratedTable">
 		<thead>
 			<tr>
-				<th>Recipes</th>
-				<th>author</th>
-				<th>rating</th>
+				<th>Recipe Name</th>
+				<th>Category</th>
+				<th>Author</th>
+				<th>Rating</th>
+
 			</tr>
 		</thead>
 		<tbody>
 
 
 			<tr>
-				<td><a href="/csci4830-recipe-book/Link.html">Recipe1</a> <br></td>
+				<td>
+					<form action="/csci4830-recipe-book/RecipePage" method="POST">
+						<button class="link" type="submit" value="id1" name="dog">Recipe1</button><br>
+					</form>
+				</td>
 				<td>Author data <br></td>
-				<td>rating data <br></td>
+				<td>Rating data <br></td>
 
 			</tr>
 			<tr>
-				<td><a href="/csci4830-recipe-book/Link.html">Recipe2</a> <br></td>
+				<td>
+					<form action="/csci4830-recipe-book/RecipePage" method="POST">
+						<button type="submit" value="id2" name="dog">Recipe2</button><br>
+					</form>
+				</td>
+				<td>Author data <br></td>
+				<td>Rating data <br></td>
 			</tr>
 			<tr>
-				<td><a href="/csci4830-recipe-book/Link.html">Recipe3</a> <br></td>
+				<td><a id="1" href="/csci4830-recipe-book/Link.html">Recipe1</a>
+					<br></td>
+				<td>Author data <br></td>
+				<td>Rating data <br></td>
 			</tr>
 			<tr>
-				<td><a href="/csci4830-recipe-book/Link.html">Recipe4</a> <br></td>
+				<td><a href="/csci4830-recipe-book/Link.html">Recipe1</a> <br></td>
+				<td>Author data <br></td>
+				<td>Rating data <br></td>
 			</tr>
 			<tr>
-				<td><a href="/csci4830-recipe-book/Link.html">Recipe5</a> <br></td>
+				<td><a href="/csci4830-recipe-book/Link.html">Recipe1</a> <br></td>
+				<td>Author data <br></td>
+				<td>Rating data <br></td>
 			</tr>
 		</tbody>
 	</table>
 </body>
+</html>

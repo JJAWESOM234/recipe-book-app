@@ -8,7 +8,7 @@ public class DBConnection {
    public static void getDBConnection() {
       System.out.println("-------- MySQL JDBC Connection Testing ------------");
       try {
-         Class.forName("com.mysql.jdbc.Driver");
+         Class.forName("com.mysql.cj.jdbc.Driver");
       } catch (ClassNotFoundException e) {
          System.out.println("Where is your MySQL JDBC Driver?");
          e.printStackTrace();
@@ -41,13 +41,13 @@ public class DBConnection {
 
    static String getUserName() {
       String usr = UtilProp.getProp("user");
-      System.out.println("[DBG] URL: " + usr);
+      System.out.println("[DBG] Username: " + usr);
       return usr;
    }
 
    static String getPassword() {
       String pwd = UtilProp.getProp("password");
-      System.out.println("[DBG] URL: " + pwd);
+//      System.out.println("[DBG] Password: " + pwd);
       return pwd;
    }
 }
