@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<style>
+label textarea {
+	vertical-align: middle;
+}
+
+#loginPosition {
+	float: right;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 15px;
+}
+</style>
+
+
+<meta charset="UTF-8">
+<title>Create Recipe</title>
+</head>
+
+<!-- The form -->
+
+<body>
+	<nav id="loginPosition">
+		<a href="/csci4830-recipe-book/SearchRecipeList">Home Page</a>
+	</nav>
+	<form id="create-recipe" action="/csci4830-recipe-book/CreateRecipe"
+		method="post">
+		<div>
+
+			<label for="RName">Recipe Name:</label> <input type="text" id="RName"
+				name="RName" placeholder="Enter here..." required>
+		</div>
+
+		<div>
+
+			<label for="RType">Recipe Type: </label> <input type="text"
+				id="RType" name="RType" placeholder="Enter here..." required>
+		</div>
+
+		<div class="textarea-box">
+
+			<label for="IngrList">Ingredient List:</label>
+			<textarea id="IngrList" name="IngrList"
+				placeholder="Enter a comma seperated list of ingredients" required></textarea>
+		</div>
+
+		<div class="textarea-box">
+
+			<label for="Inst">Instructions:</label>
+			<textarea id="Inst" name="Inst" placeholder="Enter here..." required></textarea>
+		</div>
+
+		<div class="textarea-box">
+
+			<label for="AddInfo">Additional Info:</label>
+			<textarea id="AddInfo" name="AddInfo" placeholder="Enter here..."></textarea>
+		</div>
+
+		<div>
+
+			<label for="IURL">Image URL:</label> <input type="text" id="IURL"
+				name="IURL" placeholder="Ex: https://images.com/coolfood/pancakes">
+		</div>
+
+
+		<button form="create-recipe" type="submit">Submit</button>
+		<button form="create-recipe" type=reset>Reset Form Data</button>
+	</form>
+
+</body>
+</html>

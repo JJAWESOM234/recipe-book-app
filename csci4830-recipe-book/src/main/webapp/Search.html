@@ -34,15 +34,15 @@ table.GeneratedTable thead {
 }
 
 button.link {
-  background: none!important;
-  border: none;
-  padding: 0!important;
-  /*optional*/
-  font-family: arial, sans-serif;
-  /*input has OS specific font-family*/
-  color: #069;
-  text-decoration: underline;
-  cursor: pointer;
+	background: none !important;
+	border: none;
+	padding: 0 !important;
+	/*optional*/
+	font-family: arial, sans-serif;
+	/*input has OS specific font-family*/
+	color: #069;
+	text-decoration: underline;
+	cursor: pointer;
 }
 </style>
 <link rel="stylesheet"
@@ -50,16 +50,18 @@ button.link {
 </head>
 <body>
 	<nav id="loginPosition">
-		<a href="/csci4830-recipe-book/login.html">Login</a> <br>
+		<a href="/csci4830-recipe-book/login.html">Login/Register</a> 
+		<a href="/csci4830-recipe-book/CreateRecipe.html">Create Recipe</a> 
 	</nav>
 	<form class="params" action="/csci4830-recipe-book/SearchRecipeList"
 		method="POST">
 		<input type="text" placeholder="Search Your Recipe" name="search">
 		<button type="submit">Search</button>
 
-		<div id="wrapper">
-			<select>
-				<option selected>Filter by review</option>
+		<div class="select-wrapper">
+			<label for="rating">Rating:</label>
+			<select name="rating">
+				<option value="nothing">..</option>
 				<option value="one">One</option>
 				<option value="two">Two</option>
 				<option value="three">Three</option>
@@ -67,9 +69,25 @@ button.link {
 				<option value="five">Five</option>
 			</select>
 		</div>
-		<label for="aSort">Sort Recipes Alphabetically:</label><input
-			type="checkbox" id="aSort" value="aSort" />
-
+		<div class="select-wrapper">
+			<label for="cat">Category:</label>
+			<select name="cat">
+			<option value="nothing">..</option>
+				<option value="apps">Appetizer</option>
+				<option value="bread">Bread</option>
+				<option value="bfast">Breakfast</option>
+				<option value="dess">Dessert</option>
+				<option value="drink">Drink</option>
+				<option value="main">Main Course</option>
+				<option value="salad">Salad</option>
+				<option value="condsauce">Condiment/Sauce</option>
+				<option value="side">Side Dish</option>
+				<option value="snack">Snack</option>
+				<option value="soup">Soup</option>
+				<option value="wrapsand">Wraps/Sandwhich</option>
+				
+			</select>
+		</div>
 	</form>
 	<h2 class="sep">Browse Recipes:</h2>
 
@@ -89,7 +107,8 @@ button.link {
 			<tr>
 				<td>
 					<form action="/csci4830-recipe-book/RecipePage" method="POST">
-						<button class="link" type="submit" value="id1" name="dog">Recipe1</button><br>
+						<button class="link" type="submit" value="id1" name="dog">Recipe1</button>
+						<br>
 					</form>
 				</td>
 				<td>Author data <br></td>
@@ -99,7 +118,8 @@ button.link {
 			<tr>
 				<td>
 					<form action="/csci4830-recipe-book/RecipePage" method="POST">
-						<button type="submit" value="id2" name="dog">Recipe2</button><br>
+						<button type="submit" value="id2" name="dog">Recipe2</button>
+						<br>
 					</form>
 				</td>
 				<td>Author data <br></td>

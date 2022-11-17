@@ -40,7 +40,8 @@ public class RecipePage extends HttpServlet {
 		int recipeIdSearch = Integer.parseInt(request.getParameter("recipeSelection"));
 		System.out.println(recipeIdSearch);
 
-		getRecipeInformation(recipeIdSearch);
+		String recipeData = getRecipeInformation(recipeIdSearch);
+		displayHTML(request, response, recipeData);
 
 	}
 
@@ -66,8 +67,16 @@ public class RecipePage extends HttpServlet {
 				Date createdDate = rs.getDate("createdDate");
 				String ingredientList = rs.getString("ingredientList").trim();
 				String instructions = rs.getString("instructions").trim();
-				String additionalInfo = rs.getString("additionalInfo").trim();
-				String imageURL = rs.getString("imageURL").trim();
+				String additionalInfo = "";
+				if (rs.getString("additionalInfo") != null) {
+					additionalInfo = rs.getString("additionalInfo").trim();
+				}
+				String imageURL = "";
+				if (rs.getString("imageURL") != null) {
+					imageURL = rs.getString("imageURL").trim();
+					System.out.println(imageURL);
+				}
+
 				int userId = rs.getInt("userid");
 
 				System.out.println(recipeId + " | " + recipeName + " | " + recipeType + " | " + createdDate + " | "
@@ -76,6 +85,38 @@ public class RecipePage extends HttpServlet {
 
 				String username = getUser(userId);
 
+				returnHTML += "<div class=\"recipe-info\">\r\n" + "		<div class=\"header\">\r\n"
+						+ "			<div class=\"name-cat\">";
+				returnHTML += "<h1 class=\"name-cat-0\">" + recipeName + "</h1>";
+				returnHTML += "<span class=\"name-cat-0\">(" + recipeType + ")</span>";
+				returnHTML += "</div>";
+				returnHTML += "<p>By: " + username + "</p>";
+				returnHTML += "<p>Created on: " + createdDate + "</p>";
+				returnHTML += "</div>";
+
+				if (imageURL != "") {
+					returnHTML += "<div class=\"image-container\">";
+					returnHTML += "<img align=\"right\" width=\"200px\" height=\"200px\"\r\n src=\"" + imageURL
+							+ "\"></div>";
+				}
+
+				returnHTML += "<div class=\"ingredients\">\r\n" + "			<h3>Ingredient List</h3>\r\n"
+						+ "			<ul>";
+				// loop
+				String[] ingredient = ingredientList.split(",");
+				for (int i = 0; i < ingredient.length; i++) {
+					returnHTML += "<li>" + ingredient[i] + "</li>";
+				}
+
+				returnHTML += "</ul>\r\n" + "\r\n" + "		</div>\r\n" + "		<div class=\"instructions\">\r\n"
+						+ "			<h3>Instructions</h3>";
+				returnHTML += "<p>" + instructions + "</p>";
+				returnHTML += "</div>";
+
+				if (additionalInfo != "") {
+					returnHTML += "<div class=\"a-info\">\r\n" + "			<h3>Additional Material</h3>";
+					returnHTML += "<p>" + additionalInfo + "</p></div>";
+				}
 
 			}
 			rs.close();
@@ -101,6 +142,26 @@ public class RecipePage extends HttpServlet {
 
 		}
 		return returnHTML;
+	}
+
+	private void displayHTML(HttpServletRequest request, HttpServletResponse response, String recipeData)
+			throws IOException {
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+
+		out.println("<!DOCTYPE html>\r\n" + "<html>\r\n" + "<head>\r\n" + "<style>\r\n" + "#loginPosition {\r\n"
+				+ "	float: right;\r\n" + "	display: block;\r\n" + "	color: #f2f2f2;\r\n"
+				+ "	text-align: center;\r\n" + "	padding: 12px;\r\n" + "	text-decoration: none;\r\n"
+				+ "	font-size: 15px;\r\n" + "}\r\n" + "</style>\r\n" + "<meta charset=\"UTF-8\">\r\n"
+				+ "<title>Recipe Name</title>\r\n" + "</head>\r\n" + "\r\n" + "\r\n" + "<body>\r\n"
+				+ "	<nav id=\"loginPosition\">\r\n"
+				+ "		<a href=\"/csci4830-recipe-book/SearchRecipeList\">Home Page</a> <a\r\n"
+				+ "			href=\"/csci4830-recipe-book/login.html\">Login</a>\r\n" + "	</nav>");
+
+		out.println(recipeData);
+
+		out.println("</div>\r\n" + "\r\n" + "\r\n" + "\r\n" + "\r\n" + "</body>\r\n" + "</html>");
+
 	}
 
 	/**
