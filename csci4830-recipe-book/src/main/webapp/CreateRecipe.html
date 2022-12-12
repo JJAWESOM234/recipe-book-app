@@ -1,5 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
+
+    <head>
+  
+   
+<style>
+
+
+body {
+      background-image: url('pic.png');
+      background-size:cover;
+    }
+
+    div{
+
+        color: white;
+        padding: 3px;
+
+
+    }
+
+    button{
+
+        font-size: 15px;
+
+    }
+
+    a:link{
+
+        color: white;
+        font-size: 15px;
+    }
+
+    a:hover {
+        color: black;
+        background-color: transparent;
+        text-decoration: underline;
+}
+
+
+
+label textarea {
+	vertical-align: middle;
+}
+
+#loginPosition {
+	float: right;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 15px;
+}
+
+          
+</style>
+
+
+<meta charset="UTF-8">
+<title>Create Recipe</title>
+</head>
+
+<!-- The form -->
+
+<body>
+    
+   
+	<nav id="loginPosition">
+		<a style="text-decoration:none" href="/csci4830-recipe-book/SearchRecipeList">Homepage</a>
+        
+	</nav>
+	<form id="create-recipe" action="/csci4830-recipe-book/CreateRecipe"
+		method="post">
+
+        
+
+		<div position:relative; Right:-20px;>
+            <center>
+			<!--<label for="RName">Recipe Name:</label> <input type="text" id="RName"-->
+            <textarea id="RName" name="Recipe Name"
+				placeholder="Enter Recipe" required></textarea>
+            </center>
+		</div>
+        
+
+        <center>
+
+		<div class="select-wrapper">
+
+
+			<label for="cat"></label>
+
+            
+			<select name="cat">
+			<option value="nothing">..</option>
+				<option value="apps">Appetizer</option>
+				<option value="bread">Bread</option>
+				<option value="bfast">Breakfast</option>
+				<option value="dess">Dessert</option>
+				<option value="drink">Drink</option>
+				<option value="main">Main Course</option>
+				<option value="salad">Salad</option>
+				<option value="condsauce">Condiment/Sauce</option>
+				<option value="side">Side Dish</option>
+				<option value="snack">Snack</option>
+				<option value="soup">Soup</option>
+				<option value="wrapsand">Wraps/Sandwhich</option>
+				
+			</select>
+		</div>
+
+
+
+		<div class="textarea-box">
+
+			<!--<label for="IngrList">Ingredient List:</label>-->
+			<textarea id="IngrList" name="IngrList"
+				placeholder="Enter a comma seperated list of ingredients" required></textarea>
+		</div>
+
+
+
+
+
+		<div class="textarea-box">
+
+			<!--<label for="Inst">Instructions:</label>-->
+			<textarea id="Inst" name="Inst" placeholder="Enter instructions" required></textarea>
+		</div>
+
+
+        
+		<div class="textarea-box">
+
+			<!--<label for="AddInfo">Additional Info:</label>-->
+			<textarea id="AddInfo" name="AddInfo" placeholder="Additional Info"></textarea>
+		</div>
+
+		<div>
+
+			<!--<label for="IURL">Image URL:</label> <input type="text" id="IURL"-->
+
+            <textarea id="AddInfo" name="AddInfo" placeholder="Paste picture URL here"></textarea>
+
+		</div>
+
+      
+		<button form="create-recipe" type="submit">Submit</button>
+		<button form="create-recipe" type=reset>Reset Form Data</button>
+    
+        </center>
+
+	</form>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
 
 <style>
@@ -75,3 +251,5 @@ label textarea {
 
 </body>
 </html>
+
+-->
