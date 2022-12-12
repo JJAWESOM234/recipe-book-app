@@ -1,4 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<style>
+
+
+body {
+      background-image: url('pic.png');
+      background-size:cover;
+    }
+
+    h1 {
+     color: white;
+    }
+
+    td {
+     color: white;
+    }
+
+button{
+
+font-size: 15px;
+
+}
+
+a:link{
+
+color: white;
+font-size: 15px;
+}
+
+a:hover {
+color: black;
+background-color: transparent;
+text-decoration: underline;
+}
+
+
+
+form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+</style>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+</head>
+
+<body>
+
+    <nav id="loginPosition">
+		<a style="text-decoration:none" href="/csci4830-recipe-book/SearchRecipeList">Homepage</a>
+        
+	</nav>
+
+	<h1 align="center">Login Here</h1>
+
+	<form action="Login" method="POST">
+		<table>
+			<tr>
+				<td>User name:</td>
+				<td><input type="text" name="user"
+					placeholder="Enter name Here" /></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type="password" name="pass"
+					placeholder="Enter Password Here"/></td>
+			</tr>
+
+			<tr>
+				<td><input type="submit" name="submit" value="Login" /></td>
+				<td>
+					<p>
+						Not yet a Member? <a href="/csci4830-recipe-book/register.html">Register</a>
+					</p>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!--
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,3 +144,5 @@ form {
 </body>
 
 </html>
+
+-->
