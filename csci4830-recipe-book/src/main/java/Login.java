@@ -54,7 +54,6 @@ public class Login extends HttpServlet {
 			
 			if (rs.next() != false) {
 				do {
-					System.out.println("john");
 					if (password.equals(rs.getString("password"))) {
 						response.getWriter().append("Login Succesful");
 						response.sendRedirect(request.getContextPath() + "/SearchRecipeList");
@@ -72,7 +71,7 @@ public class Login extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 *      response)//
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

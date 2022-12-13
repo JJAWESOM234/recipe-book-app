@@ -12,7 +12,7 @@ public class UtilProp {
 //   static String _PROP_FILENAME_WIN_LOCAL = "C:\\Users\\drewp\\4830\\workspace\\workspace4830\\csci4830-recipe-book\\src\\main\\webapp\\WEB-INF\\config.properties";
 
 	// Jed
-	static String _PROP_FILENAME_WIN_LOCAL = "E:\\workspaceCSCI4830\\Project\\csci4830-recipe-book\\src\\main\\webapp\\WEB-INF\\config.properties";
+	static String _PROP_FILENAME_WIN_LOCAL = "E:\\workspaceCSCI4830\\Project\\csci4830-recipe-book\\src\\main\\webapp\\config.properties";
 
 	// Qahar (change this to your local path)
 // static String _PROP_FILENAME_WIN_LOCAL = "C:\\Users\\drewp\\4830\\workspace\\workspace4830\\csci4830-recipe-book\\src\\main\\webapp\\WEB-INF\\config.properties";
