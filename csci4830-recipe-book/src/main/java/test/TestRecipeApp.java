@@ -182,23 +182,23 @@ public class TestRecipeApp {
 		String InstList = "Wrap potatoes in tin foil. Place potatoes on pan. Place in oven. Once cooked add butter.";
 		String AddInfo = "Be sure to have tin foil";
 		String ImgURL = "http://kellyshealthykitchen.files.wordpress.com/2012/11/photo39.jpg?w=500&h=500";
-		
+
 		removeTestingRecipe(RName, RType, IngList, InstList, AddInfo, ImgURL);
-		
-		driver.findElement(By.xpath("/html/body/form/div[1]/input")).sendKeys(RName);
-		driver.findElement(By.xpath("/html/body/form/div[2]/input")).sendKeys(RType);
-		driver.findElement(By.xpath("/html/body/form/div[3]/textarea")).sendKeys(IngList);
-		driver.findElement(By.xpath("/html/body/form/div[4]/textarea")).sendKeys(InstList);
-		driver.findElement(By.xpath("/html/body/form/div[5]/textarea")).sendKeys(AddInfo);
-		driver.findElement(By.xpath("/html/body/form/div[6]/input")).sendKeys(ImgURL);
-		driver.findElement(By.xpath("/html/body/form/button[1]")).click();
+
+		driver.findElement(By.xpath("/html/body/form/div/center/textarea")).sendKeys(RName);
+		(new Select(driver.findElement(By.xpath("/html/body/form/center/div[1]/select")))).selectByVisibleText(RType);
+		driver.findElement(By.xpath("/html/body/form/center/div[2]/textarea")).sendKeys(IngList);
+		driver.findElement(By.xpath("/html/body/form/center/div[3]/textarea")).sendKeys(InstList);
+		driver.findElement(By.xpath("/html/body/form/center/div[4]/textarea")).sendKeys(AddInfo);
+		driver.findElement(By.xpath("/html/body/form/center/div[5]/textarea")).sendKeys(ImgURL);
+		driver.findElement(By.xpath("/html/body/form/center/button[1]")).click();
 
 		Assert.assertTrue(getRecipeValid(RName, RType, IngList, InstList, AddInfo, ImgURL));
 		Assert.assertTrue(driver.findElement(By.xpath("/html/body/h1")).isDisplayed());
 		driver.findElement(By.xpath("/html/body/div/a")).click();
 		Assert.assertTrue(driver.findElement(By.xpath("/html/body/table")).isDisplayed());
 	}
-	
+
 	@Test
 	public void testCreateRecipeClear() throws Exception {
 		driver.get(
@@ -211,35 +211,139 @@ public class TestRecipeApp {
 		String InstList = "Wrap potatoes in tin foil. Place potatoes on pan. Place in oven. Once cooked add butter.";
 		String AddInfo = "Be sure to have tin foil";
 		String ImgURL = "http://kellyshealthykitchen.files.wordpress.com/2012/11/photo39.jpg?w=500&h=500";
-		
-		removeTestingRecipe(RName, RType, IngList, InstList, AddInfo, ImgURL);
-		
-		driver.findElement(By.xpath("/html/body/form/div[1]/input")).sendKeys(RName);
-		driver.findElement(By.xpath("/html/body/form/div[2]/input")).sendKeys(RType);
-		driver.findElement(By.xpath("/html/body/form/div[3]/textarea")).sendKeys(IngList);
-		driver.findElement(By.xpath("/html/body/form/div[4]/textarea")).sendKeys(InstList);
-		driver.findElement(By.xpath("/html/body/form/div[5]/textarea")).sendKeys(AddInfo);
-		driver.findElement(By.xpath("/html/body/form/div[6]/input")).sendKeys(ImgURL);
-		driver.findElement(By.xpath("/html/body/form/button[2]")).click();
 
-		String RNameClear = driver.findElement(By.xpath("/html/body/form/div[1]/input")).getText();
-		String RTypeClear = driver.findElement(By.xpath("/html/body/form/div[2]/input")).getText();
-		String IngListClear = driver.findElement(By.xpath("/html/body/form/div[3]/textarea")).getText();
-		String InstListClear = driver.findElement(By.xpath("/html/body/form/div[4]/textarea")).getText();
-		String AddInfoClear = driver.findElement(By.xpath("/html/body/form/div[5]/textarea")).getText();
-		String ImgURLClear = driver.findElement(By.xpath("/html/body/form/div[6]/input")).getText();
-		
+		driver.findElement(By.xpath("/html/body/form/div/center/textarea")).sendKeys(RName);
+		(new Select(driver.findElement(By.xpath("/html/body/form/center/div[1]/select")))).selectByVisibleText(RType);
+		driver.findElement(By.xpath("/html/body/form/center/div[2]/textarea")).sendKeys(IngList);
+		driver.findElement(By.xpath("/html/body/form/center/div[3]/textarea")).sendKeys(InstList);
+		driver.findElement(By.xpath("/html/body/form/center/div[4]/textarea")).sendKeys(AddInfo);
+		driver.findElement(By.xpath("/html/body/form/center/div[5]/textarea")).sendKeys(ImgURL);
+		driver.findElement(By.xpath("/html/body/form/center/button[2]")).click();
+
+		String RNameClear = driver.findElement(By.xpath("/html/body/form/div/center/textarea")).getText();
+		String RTypeClear = ((new Select(driver.findElement(By.xpath("/html/body/form/center/div[1]/select")))).getAllSelectedOptions().iterator().next().getText());
+		String IngListClear = driver.findElement(By.xpath("/html/body/form/center/div[2]/textarea")).getText();
+		String InstListClear = driver.findElement(By.xpath("/html/body/form/center/div[3]/textarea")).getText();
+		String AddInfoClear = driver.findElement(By.xpath("/html/body/form/center/div[4]/textarea")).getText();
+		String ImgURLClear = driver.findElement(By.xpath("/html/body/form/center/div[5]/textarea")).getText();
+
 		String nothing = "";
-		
+		System.out.println(RTypeClear);
 		Assert.assertEquals(nothing, RNameClear);
-		Assert.assertEquals(nothing, RTypeClear);
+		Assert.assertEquals("..", RTypeClear);
 		Assert.assertEquals(nothing, IngListClear);
 		Assert.assertEquals(nothing, InstListClear);
 		Assert.assertEquals(nothing, AddInfoClear);
 		Assert.assertEquals(nothing, ImgURLClear);
-	
+
 		driver.findElement(By.xpath("/html/body/nav/a")).click();
 		Assert.assertTrue(driver.findElement(By.xpath("/html/body/table")).isDisplayed());
+	}
+
+	@Test
+	public void testFilter1Option() throws Exception {
+		driver.get(
+				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		Assert.assertEquals("Cheeseburger",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
+		Assert.assertEquals("Baked Potatoes",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[6]/td[1]/form/button")).getText());
+
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("Side Dish");
+
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+
+		WebElement tableContentSearchOne = driver.findElement(By.xpath("/html/body/table/tbody/tr/td[1]/form/button"));
+
+		Assert.assertEquals("Baked Potatoes", tableContentSearchOne.getText());
+
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("..");
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+
+		Assert.assertEquals("Cheeseburger",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
+		Assert.assertEquals("Baked Potatoes",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[6]/td[1]/form/button")).getText());
+
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("Three");
+
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+
+		Assert.assertEquals("Hot Dog",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
+		Assert.assertEquals("Cheeseburger",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[1]/form/button")).getText());
+		Assert.assertEquals("Grilled cheese",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
+
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("..");
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+
+		Assert.assertEquals("Cheeseburger",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
+		Assert.assertEquals("Baked Potatoes",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[6]/td[1]/form/button")).getText());
+	}
+
+	@Test
+	public void testFilter2Option() throws Exception {
+		driver.get(
+				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		Assert.assertEquals("Cheeseburger",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
+		Assert.assertEquals("Baked Potatoes",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[6]/td[1]/form/button")).getText());
+
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("Main Course");
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("Three");
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+
+		Assert.assertEquals("Hot Dog",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
+		Assert.assertEquals("Cheeseburger",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[1]/form/button")).getText());
+
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("..");
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+		
+		Assert.assertEquals("Hot Dog",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
+		Assert.assertEquals("Cheeseburger",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[1]/form/button")).getText());
+		Assert.assertEquals("Grilled cheese",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
+
+		driver.findElement(By.xpath("/html/body/form/input")).sendKeys("Hot Dog");
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+
+		Assert.assertEquals("Hot Dog",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
+
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("..");
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+			
+		Assert.assertEquals("Hot Dog",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
+
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("Main Course");
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+			
+		Assert.assertEquals("Hot Dog",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
+	}
+
+	@Test
+	public void testFilter3Option() throws Exception {
+		driver.get(
+				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("Main Course");
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("Three");
+		driver.findElement(By.xpath("/html/body/form/input")).sendKeys("Cheese");
+		driver.findElement(By.xpath("/html/body/form/button")).click();
+
+		Assert.assertEquals("Cheeseburger",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 	}
 
 	@After
@@ -416,21 +520,4 @@ public class TestRecipeApp {
 
 	}
 
-	private boolean isElementPresent(By by) {
-		try {
-			driver.findElement(by);
-			return true;
-		} catch (NoSuchElementException e) {
-			return false;
-		}
-	}
-
-	private boolean isAlertPresent() {
-		try {
-			driver.switchTo().alert();
-			return true;
-		} catch (NoAlertPresentException e) {
-			return false;
-		}
-	}
 }
