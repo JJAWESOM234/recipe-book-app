@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-  
-   
+<head>
+
+
 <style>
-
-
 body {
-      background-image: url('pic.png');
-      background-size:cover;
-    }
-
-    div{
-
-        color: white;
-        padding: 3px;
-
-
-    }
-
-    button{
-
-        font-size: 15px;
-
-    }
-
-    a:link{
-
-        color: white;
-        font-size: 15px;
-    }
-
-    a:hover {
-        color: black;
-        background-color: transparent;
-        text-decoration: underline;
+	background-image: url('pic.png');
+	background-size: cover;
 }
 
+div {
+	color: white;
+	padding: 3px;
+}
 
+button {
+	font-size: 15px;
+}
+
+a:link {
+	color: white;
+	font-size: 15px;
+}
+
+a:hover {
+	color: black;
+	background-color: transparent;
+	text-decoration: underline;
+}
 
 label textarea {
 	vertical-align: middle;
@@ -54,7 +44,9 @@ label textarea {
 	font-size: 15px;
 }
 
-          
+textarea {
+	width: 25%
+}
 </style>
 
 
@@ -65,36 +57,25 @@ label textarea {
 <!-- The form -->
 
 <body>
-    
-   
+
+
 	<nav id="loginPosition">
-		<a style="text-decoration:none" href="/csci4830-recipe-book/SearchRecipeList">Homepage</a>
-        
+		<a style="text-decoration: none; color: white;"
+			href="/csci4830-recipe-book/SearchRecipeList">Homepage</a>
 	</nav>
 	<form id="create-recipe" action="/csci4830-recipe-book/CreateRecipe"
-		method="post">
+		method="post" style="display: grid; text-align: center;">
 
-        
 
 		<div>
-            <center>
 			<!--<label for="RName">Recipe Name:</label> <input type="text" id="RName"-->
-            <textarea id="RName" name="RName"
-				placeholder="Enter Recipe" required></textarea>
-            </center>
+			<input id="RName" name="RName" placeholder="Enter Recipe Name" required></input>
 		</div>
-        
-
-        <center>
-
 		<div class="select-wrapper">
 
 
-			<label for="cat"></label>
-
-            
-			<select name="RType">
-			<option value="nothing">..</option>
+			<label for="cat">Category:</label> <select name="RType">
+				<option value="nothing">..</option>
 				<option value="Appetizer">Appetizer</option>
 				<option value="Bread">Bread</option>
 				<option value="Breakfast">Breakfast</option>
@@ -106,8 +87,8 @@ label textarea {
 				<option value="Side Dish">Side Dish</option>
 				<option value="Snack">Snack</option>
 				<option value="Soup">Soup</option>
-				<option value="Wraps/Sandwhich">Wraps/Sandwhich</option>
-				
+				<option value="Wraps/Sandwhich">Wraps/Sandwich</option>
+
 			</select>
 		</div>
 
@@ -127,11 +108,12 @@ label textarea {
 		<div class="textarea-box">
 
 			<!--<label for="Inst">Instructions:</label>-->
-			<textarea id="Inst" name="Inst" placeholder="Enter instructions" required></textarea>
+			<textarea id="Inst" name="Inst" placeholder="Enter instructions"
+				required></textarea>
 		</div>
 
 
-        
+
 		<div class="textarea-box">
 
 			<!--<label for="AddInfo">Additional Info:</label>-->
@@ -142,15 +124,18 @@ label textarea {
 
 			<!--<label for="IURL">Image URL:</label> <input type="text" id="IURL"-->
 
-            <textarea id="IURL" name=IURL placeholder="Paste picture URL here"></textarea>
+			<textarea id="IURL" name=IURL placeholder="Paste URL of image"></textarea>
 
 		</div>
 
-      
-		<button form="create-recipe" type="submit">Submit</button>
-		<button form="create-recipe" type=reset>Reset Form Data</button>
-    
-        </center>
+
+		<div>
+			<button style="width: fit-content;" form="create-recipe"
+				type="submit">Submit</button>
+			<button style="width: fit-content;" form="create-recipe" type=reset>Reset
+				Form Data</button>
+		</div>
+
 
 	</form>
 

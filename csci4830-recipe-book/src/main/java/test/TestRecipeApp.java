@@ -13,8 +13,10 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import util.DBConnection;
 
@@ -24,14 +26,16 @@ public class TestRecipeApp {
 	private String baseUrl;
 	private boolean acceptNextAlert = true;
 	private StringBuffer verificationErrors = new StringBuffer();
-	private String username = "test";
+	private String username = "testtest";
 	private String password = "testing";
+	private WebDriverWait wait;
 
 	@Before
 	public void Init() throws Exception {
 		System.setProperty("webdriver.chrome.driver",
 				"E:\\workspaceCSCI4830\\Project\\csci4830-recipe-book\\src\\main\\webapp\\WEB-INF\\lib\\chromedriver\\chromedriver.exe");
 		driver = new ChromeDriver();
+		wait = new WebDriverWait(driver, 10);
 		baseUrl = "https://www.google.com/";
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
@@ -40,6 +44,7 @@ public class TestRecipeApp {
 	public void testRecipeHomePage() throws Exception {
 		driver.get(
 				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		// Testing HomePage
 		WebElement table = driver.findElement(By.xpath("/html/body/table"));
@@ -52,9 +57,10 @@ public class TestRecipeApp {
 	public void testRecipeSeperatePageAndBack() throws Exception {
 		driver.get(
 				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
-		WebElement recipeLink = driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button"));
-
-		recipeLink.click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
+		
+		driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).click();
+		
 
 		WebElement recipeInstructions = driver.findElement(By.xpath("/html/body/div/div[4]/p"));
 
@@ -62,9 +68,7 @@ public class TestRecipeApp {
 
 		Assert.assertEquals("mix water and pancake mix until smooth, fry on skillet.", recipeInstructionsText);
 		// Testing going to homepage from recipe page
-		WebElement homePageLink = driver.findElement(By.xpath("/html/body/nav/a[1]"));
-
-		homePageLink.click();
+		driver.findElement(By.xpath("/html/body/nav/a[2]")).click();
 
 		WebElement table = driver.findElement(By.xpath("/html/body/table"));
 		Assert.assertTrue(table.isDisplayed());
@@ -74,6 +78,7 @@ public class TestRecipeApp {
 	public void testRecipeSearch() throws Exception {
 		driver.get(
 				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
@@ -116,6 +121,7 @@ public class TestRecipeApp {
 	public void test1RegisterSuccess() throws Exception {
 		driver.get(
 				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		driver.findElement(By.xpath("/html/body/nav/a[1]")).click();
 
@@ -132,7 +138,7 @@ public class TestRecipeApp {
 		Assert.assertTrue(getLoginUser(username, password));
 
 		driver.findElement(By.xpath("/html/body/h1")).isDisplayed();
-		driver.findElement(By.xpath("/html/body/div/a")).click();
+		driver.findElement(By.xpath("/html/body/div[1]/a")).click();
 		Assert.assertTrue(driver.findElement(By.xpath("/html/body/table")).isDisplayed());
 	}
 
@@ -140,7 +146,9 @@ public class TestRecipeApp {
 	public void test2LoginSuccess() throws Exception {
 		driver.get(
 				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
+		driver.findElement(By.xpath("/html/body/nav/a[1]")).click();
 		driver.findElement(By.xpath("/html/body/nav/a[1]")).click();
 
 		Assert.assertEquals("Login Here", driver.findElement(By.xpath("/html/body/h1")).getText());
@@ -157,7 +165,9 @@ public class TestRecipeApp {
 	public void test3LoginFail() throws Exception {
 		driver.get(
 				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
+		driver.findElement(By.xpath("/html/body/nav/a[1]")).click();
 		driver.findElement(By.xpath("/html/body/nav/a[1]")).click();
 
 		Assert.assertEquals("Login Here", driver.findElement(By.xpath("/html/body/h1")).getText());
@@ -185,13 +195,13 @@ public class TestRecipeApp {
 
 		removeTestingRecipe(RName, RType, IngList, InstList, AddInfo, ImgURL);
 
-		driver.findElement(By.xpath("/html/body/form/div/center/textarea")).sendKeys(RName);
-		(new Select(driver.findElement(By.xpath("/html/body/form/center/div[1]/select")))).selectByVisibleText(RType);
-		driver.findElement(By.xpath("/html/body/form/center/div[2]/textarea")).sendKeys(IngList);
-		driver.findElement(By.xpath("/html/body/form/center/div[3]/textarea")).sendKeys(InstList);
-		driver.findElement(By.xpath("/html/body/form/center/div[4]/textarea")).sendKeys(AddInfo);
-		driver.findElement(By.xpath("/html/body/form/center/div[5]/textarea")).sendKeys(ImgURL);
-		driver.findElement(By.xpath("/html/body/form/center/button[1]")).click();
+		driver.findElement(By.xpath("/html/body/form/div[1]/input")).sendKeys(RName);
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText(RType);
+		driver.findElement(By.xpath("/html/body/form/div[3]/textarea")).sendKeys(IngList);
+		driver.findElement(By.xpath("/html/body/form/div[4]/textarea")).sendKeys(InstList);
+		driver.findElement(By.xpath("/html/body/form/div[5]/textarea")).sendKeys(AddInfo);
+		driver.findElement(By.xpath("/html/body/form/div[6]/textarea")).sendKeys(ImgURL);
+		driver.findElement(By.xpath("/html/body/form/div[7]/button[1]")).click();
 
 		Assert.assertTrue(getRecipeValid(RName, RType, IngList, InstList, AddInfo, ImgURL));
 		Assert.assertTrue(driver.findElement(By.xpath("/html/body/h1")).isDisplayed());
@@ -201,8 +211,9 @@ public class TestRecipeApp {
 
 	@Test
 	public void testCreateRecipeClear() throws Exception {
-		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+
+		login();
+
 		driver.findElement(By.xpath("/html/body/nav/a[2]")).click();
 
 		String RName = "Baked Potatoes";
@@ -212,20 +223,21 @@ public class TestRecipeApp {
 		String AddInfo = "Be sure to have tin foil";
 		String ImgURL = "http://kellyshealthykitchen.files.wordpress.com/2012/11/photo39.jpg?w=500&h=500";
 
-		driver.findElement(By.xpath("/html/body/form/div/center/textarea")).sendKeys(RName);
-		(new Select(driver.findElement(By.xpath("/html/body/form/center/div[1]/select")))).selectByVisibleText(RType);
-		driver.findElement(By.xpath("/html/body/form/center/div[2]/textarea")).sendKeys(IngList);
-		driver.findElement(By.xpath("/html/body/form/center/div[3]/textarea")).sendKeys(InstList);
-		driver.findElement(By.xpath("/html/body/form/center/div[4]/textarea")).sendKeys(AddInfo);
-		driver.findElement(By.xpath("/html/body/form/center/div[5]/textarea")).sendKeys(ImgURL);
-		driver.findElement(By.xpath("/html/body/form/center/button[2]")).click();
+		driver.findElement(By.xpath("/html/body/form/div[1]/input")).sendKeys(RName);
+		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText(RType);
+		driver.findElement(By.xpath("/html/body/form/div[3]/textarea")).sendKeys(IngList);
+		driver.findElement(By.xpath("/html/body/form/div[4]/textarea")).sendKeys(InstList);
+		driver.findElement(By.xpath("/html/body/form/div[5]/textarea")).sendKeys(AddInfo);
+		driver.findElement(By.xpath("/html/body/form/div[6]/textarea")).sendKeys(ImgURL);
+		driver.findElement(By.xpath("/html/body/form/div[7]/button[2]")).click();
 
-		String RNameClear = driver.findElement(By.xpath("/html/body/form/div/center/textarea")).getText();
-		String RTypeClear = ((new Select(driver.findElement(By.xpath("/html/body/form/center/div[1]/select")))).getAllSelectedOptions().iterator().next().getText());
-		String IngListClear = driver.findElement(By.xpath("/html/body/form/center/div[2]/textarea")).getText();
-		String InstListClear = driver.findElement(By.xpath("/html/body/form/center/div[3]/textarea")).getText();
-		String AddInfoClear = driver.findElement(By.xpath("/html/body/form/center/div[4]/textarea")).getText();
-		String ImgURLClear = driver.findElement(By.xpath("/html/body/form/center/div[5]/textarea")).getText();
+		String RNameClear = driver.findElement(By.xpath("/html/body/form/div[1]/input")).getText();
+		String RTypeClear = ((new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select"))))
+				.getAllSelectedOptions().iterator().next().getText());
+		String IngListClear = driver.findElement(By.xpath("/html/body/form/div[3]/textarea")).getText();
+		String InstListClear = driver.findElement(By.xpath("/html/body/form/div[4]/textarea")).getText();
+		String AddInfoClear = driver.findElement(By.xpath("/html/body/form/div[5]/textarea")).getText();
+		String ImgURLClear = driver.findElement(By.xpath("/html/body/form/div[6]/textarea")).getText();
 
 		String nothing = "";
 		System.out.println(RTypeClear);
@@ -244,6 +256,7 @@ public class TestRecipeApp {
 	public void testFilter1Option() throws Exception {
 		driver.get(
 				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
 		Assert.assertEquals("Baked Potatoes",
@@ -269,11 +282,11 @@ public class TestRecipeApp {
 
 		driver.findElement(By.xpath("/html/body/form/button")).click();
 
-		Assert.assertEquals("Hot Dog",
-				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 		Assert.assertEquals("Cheeseburger",
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
+		Assert.assertEquals("Grilled Cheese",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[1]/form/button")).getText());
-		Assert.assertEquals("Grilled cheese",
+		Assert.assertEquals("Chocolate",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
 
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("..");
@@ -289,6 +302,7 @@ public class TestRecipeApp {
 	public void testFilter2Option() throws Exception {
 		driver.get(
 				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
 		Assert.assertEquals("Baked Potatoes",
@@ -298,14 +312,13 @@ public class TestRecipeApp {
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("Three");
 		driver.findElement(By.xpath("/html/body/form/button")).click();
 
-		Assert.assertEquals("Hot Dog",
-				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 		Assert.assertEquals("Cheeseburger",
-				driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[1]/form/button")).getText());
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
+		
 
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("..");
 		driver.findElement(By.xpath("/html/body/form/button")).click();
-		
+
 		Assert.assertEquals("Hot Dog",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 		Assert.assertEquals("Cheeseburger",
@@ -321,13 +334,13 @@ public class TestRecipeApp {
 
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("..");
 		driver.findElement(By.xpath("/html/body/form/button")).click();
-			
+
 		Assert.assertEquals("Hot Dog",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("Main Course");
 		driver.findElement(By.xpath("/html/body/form/button")).click();
-			
+
 		Assert.assertEquals("Hot Dog",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 	}
@@ -336,6 +349,7 @@ public class TestRecipeApp {
 	public void testFilter3Option() throws Exception {
 		driver.get(
 				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("Main Course");
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("Three");
@@ -344,6 +358,57 @@ public class TestRecipeApp {
 
 		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
+	}
+
+	@Test
+	public void testRateRecipe() throws Exception {
+		driver.get(
+				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		
+		driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).click();
+		(new Select(driver.findElement(By.xpath("/html/body/div/div[6]/div/form/select")))).selectByVisibleText("Five");
+		driver.findElement(By.xpath("/html/body/div/div[6]/div/form/button")).click();
+	
+		Assert.assertEquals(5, 5);
+		
+		(new Select(driver.findElement(By.xpath("/html/body/div/div[6]/div/form/select")))).selectByVisibleText("One");
+		driver.findElement(By.xpath("/html/body/div/div[6]/div/form/button")).click();
+
+		Assert.assertEquals(1, 1);
+	}
+	@Test
+	public void testRateNewRecipe() throws Exception {
+		driver.get(
+				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		
+		driver.findElement(By.xpath("/html/body/table/tbody/tr[5]/td[1]/form/button")).click();
+		(new Select(driver.findElement(By.xpath("/html/body/div/div[5]/div/form/select")))).selectByVisibleText("Five");
+		driver.findElement(By.xpath("/html/body/div/div[5]/div/form/button")).click();
+	
+		Assert.assertEquals(5, 5);
+		
+		(new Select(driver.findElement(By.xpath("/html/body/div/div[5]/div/form/select")))).selectByVisibleText("One");
+		driver.findElement(By.xpath("/html/body/div/div[5]/div/form/button")).click();
+
+		Assert.assertEquals(1, 1);
+	}
+
+	private void login() {
+		driver.get(
+				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/nav/a[1]")));
+		driver.findElement(By.xpath("/html/body/nav/a[1]")).click();
+
+		driver.findElement(By.xpath("/html/body/form/table/tbody/tr[1]/td[2]/input")).sendKeys(username);
+		driver.findElement(By.xpath("/html/body/form/table/tbody/tr[2]/td[2]/input")).sendKeys(password);
+		driver.findElement(By.xpath("/html/body/form/table/tbody/tr[3]/td[1]/input")).click();
+		driver.findElement(By.xpath("/html/body/div[1]/a")).click();
 	}
 
 	@After
@@ -355,32 +420,6 @@ public class TestRecipeApp {
 			fail(verificationErrorString);
 		}
 	}
-
-	private void checkRecipeList() {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
-		try {
-			DBConnection.getDBConnection();
-			connection = DBConnection.connection;
-
-			String selectSQL = "SELECT * FROM recipes";
-			preparedStatement = connection.prepareStatement(selectSQL);
-			ResultSet rs = preparedStatement.executeQuery();
-
-			if (rs.next() != false) {
-				do {
-					System.out.println(rs.getString("recipeName") + " | " + rs.getString("recipeType") + " | "
-							+ rs.getString("ingredientList") + " | " + rs.getString("instructions") + " | "
-							+ rs.getString("additionalInfo") + " | " + rs.getString("imageURL") + "\n\n");
-				} while (rs.next());
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private boolean getRecipeValid(String RName, String RType, String IngList, String InstList, String AddInfo,
 			String ImgURL) {
 		Connection connection = null;
@@ -390,7 +429,7 @@ public class TestRecipeApp {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
 
-			String selectSQL = "SELECT * FROM recipes WHERE recipeName LIKE ? AND recipeType LIKE ? AND ingredientList LIKE ? AND instructions LIKE ? AND additionalInfo LIKE ? AND imageURL LIKE ?";
+			String selectSQL = "SELECT * FROM recipes WHERE recipeName = ? AND recipeType = ? AND ingredientList = ? AND instructions = ? AND additionalInfo = ? AND imageURL = ?";
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, RName);
 			preparedStatement.setString(2, RType);
@@ -408,6 +447,8 @@ public class TestRecipeApp {
 							+ rs.getString("additionalInfo") + " | " + rs.getString("imageURL"));
 					retBool = true;
 				} while (rs.next());
+			} else {
+				System.out.println("nothing");
 			}
 
 		} catch (SQLException e) {
@@ -425,7 +466,10 @@ public class TestRecipeApp {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
 
-			String selectSQL = "DELETE FROM recipes WHERE recipeName LIKE ? AND recipeType LIKE ? AND ingredientList LIKE ? AND instructions LIKE ? AND additionalInfo LIKE ? AND imageURL LIKE ?";
+			String SQLChecks = "SET FOREIGN_KEY_CHECKS=0;";
+			preparedStatement = connection.prepareStatement(SQLChecks);
+			preparedStatement.execute();
+			String selectSQL = "DELETE FROM recipes WHERE recipeName = ? AND recipeType = ? AND ingredientList = ? AND instructions = ? AND additionalInfo = ? AND imageURL = ?";
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, RName);
 			preparedStatement.setString(2, RType);
@@ -450,12 +494,16 @@ public class TestRecipeApp {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
 
-			String selectSQL = "DELETE FROM userLogin WHERE username LIKE ? AND password LIKE ?";
+			System.out.println(user + " | " + pass);
+			String SQLChecks = "SET FOREIGN_KEY_CHECKS=0;";
+			preparedStatement = connection.prepareStatement(SQLChecks);
+			preparedStatement.execute();
+			String selectSQL = "DELETE FROM userLogin WHERE username = ? AND password = ?";
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, user);
 			preparedStatement.setString(2, pass);
 
-			preparedStatement.execute();
+			System.out.println(preparedStatement.execute());
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -471,7 +519,7 @@ public class TestRecipeApp {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
 
-			String selectSQL = "SELECT * FROM userLogin WHERE username LIKE ?";
+			String selectSQL = "SELECT * FROM userLogin WHERE username = ?";
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, user);
 
@@ -499,7 +547,7 @@ public class TestRecipeApp {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
 
-			String selectSQL = "SELECT * FROM userLogin WHERE username LIKE ? AND password LIKE ?";
+			String selectSQL = "SELECT * FROM userLogin WHERE username = ? AND password = ?";
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, user);
 			preparedStatement.setString(2, pass);

@@ -48,6 +48,9 @@ public class CreateRecipe extends HttpServlet {
 		Connection connection = null;
 		String insertSql = " INSERT INTO recipes (recipeId, recipeName, recipeType, createdDate, visibility, ingredientList, instructions, additionalInfo, imageURL, userid, rating) values (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+		int userId = util.UtilityData.getUserId();
+		
+		
 		try {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
@@ -60,8 +63,8 @@ public class CreateRecipe extends HttpServlet {
 			preparedStmt.setString(6, intructions);
 			preparedStmt.setString(7, additionalInfo);
 			preparedStmt.setString(8, imageURL);
-			preparedStmt.setInt(9, 2);
-			preparedStmt.setInt(10, 0);
+			preparedStmt.setInt(9, userId);
+			preparedStmt.setDouble(10, 0.0);
 			preparedStmt.execute();
 			connection.close();
 		} catch (Exception e) {

@@ -1,5 +1,6 @@
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,10 +36,13 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userName = request.getParameter("user");
+		String username = request.getParameter("user");
 		String password = request.getParameter("pass");
 
-		response.getWriter().append(userName + " " + password);
+		System.out.println(username);
+		username = username.replaceAll("\\s+", "");
+		password = password.replaceAll("\\s+", "");
+		System.out.println(username);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -46,24 +50,27 @@ public class Login extends HttpServlet {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
 
-			String selectSQL = "SELECT * FROM userLogin WHERE username LIKE ?";
+			String selectSQL = "SELECT * FROM userLogin WHERE username = ?";
 			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setString(1, userName);
+			preparedStatement.setString(1, username);
 
 			ResultSet rs = preparedStatement.executeQuery();
-			
+
 			if (rs.next() != false) {
 				do {
 					if (password.equals(rs.getString("password"))) {
-						response.getWriter().append("Login Succesful");
-						response.sendRedirect(request.getContextPath() + "/SearchRecipeList");
+						util.UtilityData.setUsername(username);
+						util.UtilityData.setPassword(password);
+						displayHTMLSucess(request, response);
 					}
 				} while (rs.next());
 			} else {
-				response.getWriter().append("Login Failed");
-				response.sendRedirect(request.getContextPath() + "/login.html");
+				displayHTMLFail(request, response);
 			}
 
+			rs.close();
+			preparedStatement.close();
+			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -77,6 +84,36 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+
+	private void displayHTMLSucess(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String title = "Login Complete";
+		String docType = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n"; //
+		out.println(docType + //
+				"<html>\n" + //
+				"<head><title>" + title + "</title> <style> .container{text-align: center;} </style></head>\n" + //
+				"<body bgcolor=\"#f0f0f0\">\n" + //
+				"<h1 align=\"center\">" + title + "</h1>\n");
+		out.println("<div class=\"container\"><a href=" + request.getContextPath()
+				+ "/SearchRecipeList>Continue to Recipe List</a></div> <br>");
+		out.println("</body></html>");
+	}
+
+	private void displayHTMLFail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String title = "Login Failed";
+		String docType = "<!doctype html public \"-//w3c//dtd html 4.0 transitional//en\">\n"; //
+		out.println(docType + //
+				"<html>\n" + //
+				"<head><title>" + title + "</title> <style> .container{text-align: center;} </style></head>\n" + //
+				"<body bgcolor=\"#f0f0f0\">\n" + //
+				"<h1 align=\"center\">" + title + "</h1>\n");
+		out.println("<div class=\"container\"><p>Username or password is invalid.</p><a href="
+				+ request.getContextPath() + "/login.html>Try again</a></div> <br>");
+		out.println("</body></html>");
 	}
 
 }

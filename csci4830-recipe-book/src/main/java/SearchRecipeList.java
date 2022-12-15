@@ -50,6 +50,9 @@ public class SearchRecipeList extends HttpServlet {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		
+		
 		try {
 			DBConnection.getDBConnection();
 			connection = DBConnection.connection;
@@ -59,7 +62,7 @@ public class SearchRecipeList extends HttpServlet {
 				String selectSQL = "SELECT * FROM recipes";
 				preparedStatement = connection.prepareStatement(selectSQL);
 
-			} else {// recipeName LIKE ? AND recipeType LIKE ? A rating >= ?
+			} else {
 				if (recipeCategory.equals("nothing")) {
 					recipeCategory = "";
 				}
@@ -110,6 +113,7 @@ public class SearchRecipeList extends HttpServlet {
 						RType = false;
 					} else if (RRating) {
 						System.out.println("RRating");
+						// This will have to be a double 
 						preparedStatement.setInt(i, Integer.parseInt(recipeRating));
 						RRating = false;
 					}
@@ -124,10 +128,12 @@ public class SearchRecipeList extends HttpServlet {
 				String recipeName = rs.getString("recipeName").trim();
 				String recipeType = rs.getString("recipeType").trim();
 				int userId = rs.getInt("userid");
-				int rating = rs.getInt("rating");
+				double rating = rs.getDouble("rating");
+				System.out.println("**********" + rating  + "***********");
+				//double rating = util.UtilityData.getRatingAvg(recipeId);
 
 				System.out
-						.println(recipeId + " | " + recipeName + " | " + recipeType + " | " + userId + " | " + rating);
+						.println(recipeId + " | " + recipeName + " | " + recipeType + " | " + userId + " | " + rating + " | " + rs.getString("additionalInfo"));
 
 				String username = getUser(userId);
 
@@ -139,7 +145,15 @@ public class SearchRecipeList extends HttpServlet {
 						+ "				</td>";
 				returnTable += "<td>" + recipeType + "<br></td>";
 				returnTable += "<td>" + username + "<br></td>";
-				returnTable += "<td>" + rating + "<br></td>";
+				if (rating > 0)
+				{
+					returnTable += "<td>" + rating + "<br></td>";	
+				}
+				else
+				{
+					returnTable += "<td>No Ratings<br></td>";
+				}
+				
 				returnTable += "</tr>";
 
 			}
@@ -167,6 +181,11 @@ public class SearchRecipeList extends HttpServlet {
 		}
 		return returnTable;
 	}
+
+	
+	
+	
+
 
 	private String getUser(int userId) {
 		Connection connection = null;
@@ -202,7 +221,7 @@ public class SearchRecipeList extends HttpServlet {
 				se.printStackTrace();
 			}
 		}
-		return "Bob(Default)";
+		return "";
 	}
 
 	/**
@@ -225,8 +244,9 @@ public class SearchRecipeList extends HttpServlet {
 			category = "nothing";
 		}
 
-		String selectOptionsRating = getRatingOptions(rating);
+		String selectOptionsRating = util.UtilityData.getRatingOptions(rating);
 		String selectCategoryRating = getCategoryOptions(category);
+		String[] loginVisibility = getCreateRecipeVis();
 
 		out.println("<!DOCTYPE html>\r\n" + "<html>\r\n" + "<head>\r\n" + "<style>\r\n" + "\r\n" + "body {\r\n"
 				+ "      background-image: url('pic.png');\r\n" + "      background-size:cover;\r\n" + "    }\r\n"
@@ -249,9 +269,8 @@ public class SearchRecipeList extends HttpServlet {
 				+ "<link rel=\"stylesheet\"\r\n"
 				+ "	href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css%22%3E\" />\r\n"
 				+ "<title>Recipe Homepage</title></head>\r\n" + "<body>\r\n" + "	<nav id=\"loginPosition\">\r\n"
-				+ "		<a href=\"/csci4830-recipe-book/login.html\">Login/Register</a> \r\n"
-				+ "		<a href=\"/csci4830-recipe-book/CreateRecipe.html\">Create Recipe</a> \r\n" + "	</nav>\r\n"
-				+ "	<form class=\"params\" action=\"/csci4830-recipe-book/SearchRecipeList\"\r\n"
+				+ loginVisibility[0] + "&emsp;" + loginVisibility[1]
+				+ "	</nav>\r\n" + "	<form class=\"params\" action=\"/csci4830-recipe-book/SearchRecipeList\"\r\n"
 				+ "		method=\"POST\">\r\n" + "		<input value=\"" + recipeName
 				+ "\" type=\"text\" placeholder=\"Search Your Recipe\" name=\"search\">\r\n"
 				+ "		<button type=\"submit\">Search/Filter</button>\r\n" + "\r\n"
@@ -272,60 +291,7 @@ public class SearchRecipeList extends HttpServlet {
 
 	}
 
-	private String getRatingOptions(String rating) {
-		String selectOptionsRating = "";
-		switch (rating) {
-		case "nothing":
-			selectOptionsRating += "<option value=\"nothing\" selected>..</option>\r\n"
-					+ "				<option value=\"1\">One</option>\r\n"
-					+ "				<option value=\"2\">Two</option>\r\n"
-					+ "				<option value=\"3\">Three</option>\r\n"
-					+ "				<option value=\"4\">Four</option>\r\n"
-					+ "				<option value=\"5\">Five</option>\r\n";
-			break;
-		case "1":
-			selectOptionsRating += "<option value=\"nothing\">..</option>\r\n"
-					+ "				<option value=\"1\" selected>One</option>\r\n"
-					+ "				<option value=\"2\">Two</option>\r\n"
-					+ "				<option value=\"3\">Three</option>\r\n"
-					+ "				<option value=\"4\">Four</option>\r\n"
-					+ "				<option value=\"5\">Five</option>\r\n";
-			break;
-		case "2":
-			selectOptionsRating += "<option value=\"nothing\">..</option>\r\n"
-					+ "				<option value=\"1\">One</option>\r\n"
-					+ "				<option value=\"2\" selected>Two</option>\r\n"
-					+ "				<option value=\"3\">Three</option>\r\n"
-					+ "				<option value=\"4\">Four</option>\r\n"
-					+ "				<option value=\"5\">Five</option>\r\n";
-			break;
-		case "3":
-			selectOptionsRating += "<option value=\"nothing\">..</option>\r\n"
-					+ "				<option value=\"1\">One</option>\r\n"
-					+ "				<option value=\"2\">Two</option>\r\n"
-					+ "				<option value=\"3\" selected>Three</option>\r\n"
-					+ "				<option value=\"4\">Four</option>\r\n"
-					+ "				<option value=\"5\">Five</option>\r\n";
-			break;
-		case "4":
-			selectOptionsRating += "<option value=\"nothing\">..</option>\r\n"
-					+ "				<option value=\"1\">One</option>\r\n"
-					+ "				<option value=\"2\">Two</option>\r\n"
-					+ "				<option value=\"3\">Three</option>\r\n"
-					+ "				<option value=\"4\" selected>Four</option>\r\n"
-					+ "				<option value=\"5\">Five</option>\r\n";
-			break;
-		case "5":
-			selectOptionsRating += "<option value=\"nothing\">..</option>\r\n"
-					+ "				<option value=\"1\">One</option>\r\n"
-					+ "				<option value=\"2\">Two</option>\r\n"
-					+ "				<option value=\"3\">Three</option>\r\n"
-					+ "				<option value=\"4\">Four</option>\r\n"
-					+ "				<option value=\"5\" selected>Five</option>\r\n";
-			break;
-		}
-		return selectOptionsRating;
-	}
+	
 
 	private String getCategoryOptions(String category) {
 		String selectOptionsCategory = "";
@@ -528,6 +494,25 @@ public class SearchRecipeList extends HttpServlet {
 		}
 		return selectOptionsCategory;
 	}
+
+	private String[] getCreateRecipeVis() {
+
+		String[] returnHTML = new String[2];
+		if (util.UtilityData.validUser()) {
+			returnHTML[0] = "<a style=\"text-decoration:none;color:white;\" href=\"/csci4830-recipe-book/LogOut\">Log Out</a>";
+			returnHTML[1] = "<a style=\"text-decoration:none;color:white;\" href=\"/csci4830-recipe-book/CreateRecipe.html\">Create Recipe</a> ";
+		} else {
+			returnHTML[0] = "<a style=\"text-decoration:none;color:white;\" href=\"/csci4830-recipe-book/login.html\">Login/Register</a>";
+			returnHTML[1] = "<a style=\"display:none;text-decoration:none;color:white;\" href=\"/csci4830-recipe-book/CreateRecipe.html\">Create Recipe</a> ";
+		}
+		return returnHTML;
+	}
+	
+	
+	
+	
+	
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
