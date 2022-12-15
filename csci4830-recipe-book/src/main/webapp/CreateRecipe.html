@@ -14,11 +14,45 @@ body {
 
     div{
 
-        color: white;
+		color: white; 
         padding: 3px;
 
 
+
     }
+
+	box{
+		
+        width: 110px;
+
+	}
+
+	
+
+	.textbox{
+		
+color: white;
+
+padding: 10px 30px;
+opacity: 0.7;
+display: inline-block;
+}
+
+label{
+	width: 99px;
+}
+
+.box1{
+
+color: white;
+color: black;
+
+opacity: 0.7;
+}
+
+
+
+
 
     button{
 
@@ -39,10 +73,48 @@ body {
 }
 
 
+.select-wrapper{
 
-label textarea {
-	vertical-align: middle;
+	margin-right: 2in;
+	
 }
+
+.input1{
+
+margin-top: in;
+
+
+}
+
+.url{
+	
+
+margin-right: 0.4in;
+
+}
+
+.recipename{
+
+margin-right: -10in;
+margin-top: 0.5in;
+
+}
+
+div {
+        margin-bottom: 10px;
+      }
+
+      label {
+        display: inline-block;
+        width: 99px;
+        color: #777777;
+		
+      }
+      input {
+        padding: 5px 20px;
+      }
+
+
 
 #loginPosition {
 	float: right;
@@ -67,7 +139,7 @@ label textarea {
 <body>
     
    
-	<nav id="loginPosition">
+	<nav id="loginPosition" class = "input1">
 		<a style="text-decoration:none" href="/csci4830-recipe-book/SearchRecipeList">Homepage</a>
         
 	</nav>
@@ -76,10 +148,10 @@ label textarea {
 
         
 
-		<div>
+		<div class = "recipename">
             <center>
-			<!--<label for="RName">Recipe Name:</label> <input type="text" id="RName"-->
-            <textarea id="RName" name="RName"
+			<label for="RName">Recipe Name:</label> <input type="text" id="RName"
+            <textarea id="RName" class = "textbox" name="RName"
 				placeholder="Enter Recipe" required></textarea>
             </center>
 		</div>
@@ -90,11 +162,11 @@ label textarea {
 		<div class="select-wrapper">
 
 
-			<label for="cat"></label>
+			<label for="cat">Category</label>
 
             
 			<select name="RType">
-			<option value="nothing">..</option>
+			<option value="nothing" class = "box">..</option>
 				<option value="Appetizer">Appetizer</option>
 				<option value="Bread">Bread</option>
 				<option value="Breakfast">Breakfast</option>
@@ -113,10 +185,10 @@ label textarea {
 
 
 
-		<div class="textarea-box">
+		<div class="textarea-box" class = "input3">
 
-			<!--<label for="IngrList">Ingredient List:</label>-->
-			<textarea id="IngrList" name="IngrList"
+			<label for="IngrList">Ingredient List:</label>
+			<textarea id="IngrList" class = "textbox" name="IngrList"
 				placeholder="Enter a comma seperated list of ingredients" required></textarea>
 		</div>
 
@@ -126,29 +198,29 @@ label textarea {
 
 		<div class="textarea-box">
 
-			<!--<label for="Inst">Instructions:</label>-->
-			<textarea id="Inst" name="Inst" placeholder="Enter instructions" required></textarea>
+			<label for="Inst">Instructions:</label>
+			<textarea id="Inst" class = "textbox" name="Inst" placeholder="Enter instructions" required></textarea>
 		</div>
 
 
         
 		<div class="textarea-box">
 
-			<!--<label for="AddInfo">Additional Info:</label>-->
-			<textarea id="AddInfo" name="AddInfo" placeholder="Additional Info"></textarea>
+			<label for="AddInfo">Additional Info:</label>
+			<textarea id="AddInfo" class = "textbox" name="AddInfo" placeholder="Additional Info"></textarea>
 		</div>
 
-		<div>
+		<div class = "url">
 
-			<!--<label for="IURL">Image URL:</label> <input type="text" id="IURL"-->
+			<label class ="label1" for="IURL">Image URL:</label> <input type="text" id="IURL"
 
-            <textarea id="IURL" name=IURL placeholder="Paste picture URL here"></textarea>
+            <textarea id="IURL" class = "textbox" name=IURL placeholder="Paste picture URL here"></textarea>
 
 		</div>
 
       
-		<button form="create-recipe" type="submit">Submit</button>
-		<button form="create-recipe" type=reset>Reset Form Data</button>
+		<button class = "box1" form="create-recipe" type="submit">Submit</button>
+		<button class = "box1"form="create-recipe" type=reset>Reset Form Data</button>
     
         </center>
 
@@ -156,8 +228,6 @@ label textarea {
 
 </body>
 </html>
-
-
 
 
 
