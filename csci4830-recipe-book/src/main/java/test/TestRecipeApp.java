@@ -284,10 +284,8 @@ public class TestRecipeApp {
 
 		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
-		Assert.assertEquals("Grilled Cheese",
+		Assert.assertEquals("Grilled cheese",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[1]/form/button")).getText());
-		Assert.assertEquals("Chocolate",
-				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
 
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("..");
 		driver.findElement(By.xpath("/html/body/form/button")).click();
@@ -319,29 +317,28 @@ public class TestRecipeApp {
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("..");
 		driver.findElement(By.xpath("/html/body/form/button")).click();
 
-		Assert.assertEquals("Hot Dog",
-				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 		Assert.assertEquals("Cheeseburger",
-				driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[1]/form/button")).getText());
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 		Assert.assertEquals("Grilled cheese",
-				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
+				driver.findElement(By.xpath("/html/body/table/tbody/tr[2]/td[1]/form/button")).getText());
+	
 
-		driver.findElement(By.xpath("/html/body/form/input")).sendKeys("Hot Dog");
+		driver.findElement(By.xpath("/html/body/form/input")).sendKeys("Cheeseburger");
 		driver.findElement(By.xpath("/html/body/form/button")).click();
 
-		Assert.assertEquals("Hot Dog",
+		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[1]/select")))).selectByVisibleText("..");
 		driver.findElement(By.xpath("/html/body/form/button")).click();
 
-		Assert.assertEquals("Hot Dog",
+		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("Main Course");
 		driver.findElement(By.xpath("/html/body/form/button")).click();
 
-		Assert.assertEquals("Hot Dog",
+		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).getText());
 	}
 
