@@ -43,7 +43,7 @@ public class TestRecipeApp {
 	@Test
 	public void testRecipeHomePage() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		// Testing HomePage
@@ -56,7 +56,7 @@ public class TestRecipeApp {
 	@Test
 	public void testRecipeSeperatePageAndBack() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 		
 		driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).click();
@@ -77,7 +77,7 @@ public class TestRecipeApp {
 	@Test
 	public void testRecipeSearch() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		Assert.assertEquals("Cheeseburger",
@@ -120,7 +120,7 @@ public class TestRecipeApp {
 	@Test
 	public void test1RegisterSuccess() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		driver.findElement(By.xpath("/html/body/nav/a[1]")).click();
@@ -145,7 +145,7 @@ public class TestRecipeApp {
 	@Test
 	public void test2LoginSuccess() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		driver.findElement(By.xpath("/html/body/nav/a[1]")).click();
@@ -164,7 +164,7 @@ public class TestRecipeApp {
 	@Test
 	public void test3LoginFail() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		driver.findElement(By.xpath("/html/body/nav/a[1]")).click();
@@ -183,7 +183,7 @@ public class TestRecipeApp {
 	@Test
 	public void testCreateRecipeSubmit() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		driver.findElement(By.xpath("/html/body/nav/a[2]")).click();
 
 		String RName = "Baked Potatoes";
@@ -255,7 +255,7 @@ public class TestRecipeApp {
 	@Test
 	public void testFilter1Option() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
@@ -299,7 +299,7 @@ public class TestRecipeApp {
 	@Test
 	public void testFilter2Option() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 		Assert.assertEquals("Cheeseburger",
 				driver.findElement(By.xpath("/html/body/table/tbody/tr[3]/td[1]/form/button")).getText());
@@ -345,7 +345,7 @@ public class TestRecipeApp {
 	@Test
 	public void testFilter3Option() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/nav/a[1]")));
 
 		(new Select(driver.findElement(By.xpath("/html/body/form/div[2]/select")))).selectByVisibleText("Main Course");
@@ -360,7 +360,7 @@ public class TestRecipeApp {
 	@Test
 	public void testRateRecipe() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		
 		driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/td[1]/form/button")).click();
 		(new Select(driver.findElement(By.xpath("/html/body/div/div[6]/div/form/select")))).selectByVisibleText("Five");
@@ -376,7 +376,7 @@ public class TestRecipeApp {
 	@Test
 	public void testRateNewRecipe() throws Exception {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		
 		driver.findElement(By.xpath("/html/body/table/tbody/tr[5]/td[1]/form/button")).click();
 		(new Select(driver.findElement(By.xpath("/html/body/div/div[5]/div/form/select")))).selectByVisibleText("Five");
@@ -392,7 +392,7 @@ public class TestRecipeApp {
 
 	private void login() {
 		driver.get(
-				"http://ec2-3-128-33-102.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
+				"http://ec2-18-190-24-112.us-east-2.compute.amazonaws.com:8080/csci4830-recipe-book/SearchRecipeList");
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
